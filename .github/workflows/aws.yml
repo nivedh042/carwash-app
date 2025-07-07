@@ -27,24 +27,16 @@
 name: Deploy to Amazon ECS
 
 on:
-  push:
-    branches: [ "main" ]
+push:
+  branches: [ "main" ]
 
 env:
- env:
-  AWS_REGION:    Mumbai ap-south-1               # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY:   carwash-repo       # set this to your Amazon ECR repository name
-  ECS_SERVICE:         carwash-task-service-r6jph2kh      # set this to your Amazon ECS service name
-  ECS_CLUSTER: carwash-cluster               # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: #arn:aws:ecs:ap-south-1:490004630769:task-definition/carwash-task:1 set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME:    carwash-container       # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
-
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME:    carwash-container        # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
-
+  AWS_REGION: ap-south-1                   # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: carwash-repo             # set this to your Amazon ECR repository name
+  ECS_SERVICE: carwash-task-service-r6jph2kh # set this to your Amazon ECS service name
+  ECS_CLUSTER: carwash-cluster             # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: carwashtask:1       # or .aws/task-definition.json if using a file
+  CONTAINER_NAME: carwash-container        # set this to the name of the container in the containerDefinitions section of your task definition
 permissions:
   contents: read
 
