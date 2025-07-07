@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from datetime import datetime, timezone
 import logging
+import sys
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Change this in production
@@ -19,19 +20,26 @@ def get_db():
     return conn
 
 def init_db():
-    with get_db() as db:
-        db.execute('''CREATE TABLE IF NOT EXISTS bookings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            contact TEXT NOT NULL,
-            date TEXT NOT NULL,
-            car TEXT NOT NULL
-        )''')
-        db.commit()
+    try:
+        with get_db() as db:
+            db.execute('''CREATE TABLE IF NOT EXISTS bookings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                contact TEXT NOT NULL,
+                date TEXT NOT NULL,
+                car TEXT NOT NULL
+            )''')
+            db.commit()
+        print("Database initialized successfully.")
+    except Exception as e:
+        print(f"Database initialization failed: {e}", file=sys.stderr)
+        raise
 
 @app.before_first_request
 def setup():
+    print("App setup starting...")
     init_db()
+    print("App setup complete.")
 
 @app.route('/')
 def home():
@@ -110,4 +118,9 @@ def bookings():
         return render_template('bookings.html', bookings=[])
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80) 
+    print("Starting Flask app...")
+    try:
+        app.run(host='0.0.0.0', port=80)
+    except Exception as e:
+        print(f"Flask app failed to start: {e}", file=sys.stderr)
+        raise 
