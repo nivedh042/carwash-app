@@ -13,7 +13,7 @@ env:
   ECR_REPOSITORY: carwash-repo             # set this to your Amazon ECR repository name
   ECS_SERVICE: carwash-task-service-r6jph2kh # set this to your Amazon ECS service name
   ECS_CLUSTER: carwash-cluster             # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: carwashtask:1       # or .aws/task-definition.json if using a file
+  ECS_TASK_DEFINITION: .aws/task-definition.json      # or .aws/task-definition.json if using a file
   CONTAINER_NAME: carwash-container        # set this to the name of the container in the containerDefinitions section of your task definition
 
 permissions:
